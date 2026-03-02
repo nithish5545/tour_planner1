@@ -93,63 +93,8 @@ def register():
 
 
 @app.route("/dashboard")
-def dashboard():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    return render_template("dashboard.html",
-                           name=session["user_name"])
-
-
-@app.route("/car-rental", methods=["GET", "POST"])
-def car_rental():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    if request.method == "POST":
-        days = int(request.form["days"])
-        total = days * 2000
-
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO trips (user_id,destination,days,total_cost)
-            VALUES (?,?,?,?)
-        """, (
-            session["user_id"],
-            "Car Rental",
-            days,
-            total
-        ))
-        conn.commit()
-        conn.close()
-
-        return render_template("car_rental.html",
-                               result=True,
-                               total=total)
-
-    return render_template("car_rental.html")
-
-
-@app.route("/saved-trips")
-def saved_trips():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM trips WHERE user_id=?",
-                   (session["user_id"],))
-    trips = cursor.fetchall()
-    conn.close()
-
-    return render_template("saved_trips.html", trips=trips)
-
-
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect("/login")
+def 
 
 
 # IMPORTANT: DO NOT add app.run(debug=True)
+
