@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  margin: 40px 0;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 90%;
+  margin: auto;
+}
+
+nav a {
+  flex: 1;
+  height: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: 0.4s ease;
+  text-decoration: none;
+}
+
+nav a:hover {
+  flex: 3;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
+}
+
+nav a:hover .img {
+  transform: scale(1.1);
+}
+.calculator-container {
+  background: #1e293b;
+  padding: 40px;
+  border-radius: 15px;
+  width: 400px;
+  margin: auto;
+  margin-top: 80px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.calculator-container h1 {
+  margin-bottom: 25px;
+  font-size: 22px;
+}
+
+.calculator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.calculator-form input,
+.calculator-form select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+.calculator-form button {
+  padding: 12px;
+  background: #38bdf8;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.calculator-form button:hover {
+  background: #0ea5e9;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #38bdf8;
+}
+.card {
+  width: 350px;
+  margin: 100px auto;
+  padding: 30px;
+  background: #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.card h2 {
+  margin-bottom: 20px;
+}
+
+.card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: none;
+}
+
+.card button {
+  width: 100%;
+  padding: 10px;
+  background: #38bdf8;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.card button:hover {
+  background: #0ea5e9;
+}
+
+.card a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  background: #1e293b;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  color: #38bdf8;
+}
+
+.dashboard-container {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.dashboard-cards {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.dashboard-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 15px;
+  width: 250px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.dashboard-card h3 {
+  margin-bottom: 15px;
+}
+
+.dashboard-card p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 10px 15px;
+  background: #38bdf8;
+  color: black;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: #0ea5e9;
+}

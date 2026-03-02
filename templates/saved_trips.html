@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Trips</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body{
+            background:#0f172a;
+            color:white;
+            font-family:Arial, sans-serif;
+            margin:0;
+            text-align:center;
+        }
+
+        .container{
+            width:80%;
+            margin:auto;
+            padding:50px 0;
+        }
+
+        .card{
+            background:#1e293b;
+            padding:25px;
+            border-radius:12px;
+            margin:20px auto;
+            width:500px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        h1{
+            margin-bottom:30px;
+        }
+
+        .info{
+            margin:10px 0;
+            font-size:17px;
+        }
+
+        .btn{
+            display:inline-block;
+            padding:8px 15px;
+            margin:10px 5px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .download{
+            background:#38bdf8;
+            color:black;
+        }
+
+        .download:hover{
+            background:#0ea5e9;
+            transform:scale(1.05);
+        }
+
+        .dashboard{
+            background:#22c55e;
+            color:black;
+        }
+
+        .dashboard:hover{
+            background:#16a34a;
+            transform:scale(1.05);
+        }
+
+        .empty{
+            font-size:18px;
+            margin-top:30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📌 Saved Trips</h1>
+
+    {% if trips %}
+        {% for t in trips %}
+            <div class="card">
+
+                <div class="info">
+                    <strong>Destination:</strong> {{ t.destination }}
+                </div>
+
+                <div class="info">
+                    <strong>Days:</strong> {{ t.days }}
+                </div>
+
+                <div class="info">
+                    <strong>Total Cost:</strong> ₹{{ t.total_cost }}
+                </div>
+
+                <a href="{{ url_for('download_receipt', trip_id=t.id) }}"
+                   class="btn download">
+                    Download PDF
+                </a>
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty">
+            No trips saved yet.
+        </div>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('dashboard') }}" class="btn dashboard">
+        Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

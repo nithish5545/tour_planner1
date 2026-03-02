@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Successful</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body{
+            background:#0f172a;
+            color:white;
+            font-family:Arial, sans-serif;
+            text-align:center;
+            margin:0;
+        }
+
+        .container{
+            width:80%;
+            margin:auto;
+            padding:60px 0;
+        }
+
+        .card{
+            background:#1e293b;
+            padding:40px;
+            border-radius:15px;
+            width:500px;
+            margin:auto;
+            box-shadow:0 6px 25px rgba(0,0,0,0.4);
+        }
+
+        h1{
+            color:#22c55e;
+            margin-bottom:20px;
+        }
+
+        .info{
+            margin:15px 0;
+            font-size:18px;
+        }
+
+        .btn{
+            display:inline-block;
+            padding:10px 20px;
+            margin:10px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .download{
+            background:#38bdf8;
+            color:black;
+        }
+
+        .download:hover{
+            background:#0ea5e9;
+            transform:scale(1.05);
+        }
+
+        .dashboard{
+            background:#22c55e;
+            color:black;
+        }
+
+        .dashboard:hover{
+            background:#16a34a;
+            transform:scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>🎉 Booking Successful!</h1>
+
+        <div class="info">
+            <strong>Destination:</strong> {{ destination }}
+        </div>
+
+        <div class="info">
+            <strong>Total Paid:</strong> ₹{{ total }}
+        </div>
+
+        <div class="info">
+            <strong>Booking ID:</strong> {{ trip_id }}
+        </div>
+
+        <br>
+
+        <!-- CORRECT DOWNLOAD LINK -->
+        <a href="{{ url_for('download_receipt', trip_id=trip_id) }}"
+           class="btn download">
+            Download Receipt
+        </a>
+
+        <a href="{{ url_for('dashboard') }}"
+           class="btn dashboard">
+            Go to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

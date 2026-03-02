@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tour Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body{
+            margin:0;
+            font-family:'Poppins', sans-serif;
+            background:#0f172a;
+            color:white;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .navbar{
+            background:#1e293b;
+            padding:15px 40px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .nav-left{
+            font-weight:700;
+            font-size:18px;
+        }
+
+        .nav-right a{
+            color:white;
+            text-decoration:none;
+            margin-left:25px;
+            font-weight:500;
+            transition:0.3s;
+        }
+
+        .nav-right a:hover{
+            color:#38bdf8;
+        }
+
+        /* ---------- CONTENT ---------- */
+        .content{
+            padding:30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="nav-left">
+        🌍 Tour Planner
+    </div>
+
+    <div class="nav-right">
+        <a href="/dashboard">Home</a>
+        <a href="/budget">Budget</a>
+        <a href="/car-rental">Car Rental</a>
+        <a href="/saved-trips">Saved Trips</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+        <div class="nav-right">
+        {% if session.get('is_admin')|int == 1 %}
+    <a href="/admin" style="color:#facc15;">Admin</a>
+{% endif %}
+</div>
+    </div>
+</div>
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

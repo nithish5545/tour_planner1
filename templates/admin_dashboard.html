@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+
+<a href="/admin/add">➕ Add Destination</a>
+<hr>
+
+{% for d in destinations %}
+<div style="margin:20px;padding:15px;border:1px solid #ccc;">
+    <h3>{{ d.name }}</h3>
+    <img src="{{ d.image_url }}" width="200">
+    <br>
+    <a href="/admin/edit/{{ d.id }}">Edit</a> |
+    <a href="/admin/delete/{{ d.id }}">Delete</a>
+</div>
+{% endfor %}
+
+{% endblock %}

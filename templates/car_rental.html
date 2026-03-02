@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Rental</title>
+
+    <!-- Load Main CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        /* Extra page-specific styling */
+
+        .container{
+            width: 80%;
+            margin: auto;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .card{
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        select, input{
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+        }
+
+        button{
+            padding: 10px 20px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover{
+            background: #0ea5e9;
+            transform: scale(1.05);
+        }
+
+        .result{
+            margin-top: 20px;
+            font-size: 18px;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .back-link{
+            display: block;
+            margin-top: 20px;
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        .back-link:hover{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Car Rental</h2>
+
+        <form method="POST">
+
+            <select name="car_type" required>
+                <option value="Hatchback">Hatchback (₹2000/day)</option>
+                <option value="Sedan">Sedan (₹3000/day)</option>
+                <option value="SUV">SUV (₹5000/day)</option>
+            </select>
+
+            <input type="number" name="days" placeholder="Number of Days" required>
+
+            <br>
+
+            <button type="submit">Calculate & Save</button>
+
+        </form>
+
+        {% if result %}
+            <div class="result">
+                Total Rental Cost: ₹{{ total }}
+            </div>
+        {% endif %}
+
+        <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+{% endblock %}

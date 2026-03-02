@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ name }}</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        body{
+            font-family: Arial;
+            background:#0f172a;
+            color:white;
+            text-align:center;
+            margin:0;
+        }
+        .container{
+            width:85%;
+            margin:auto;
+            padding:20px;
+        }
+        img{
+            width:100%;
+            max-height:400px;
+            object-fit:cover;
+            border-radius:15px;
+        }
+        .card{
+            background:#1e293b;
+            padding:20px;
+            margin-top:20px;
+            border-radius:12px;
+        }
+        input{
+            padding:8px;
+            margin:5px;
+            border-radius:6px;
+            border:none;
+        }
+        button{
+            padding:10px 15px;
+            background:#38bdf8;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            margin:5px;
+        }
+        button:hover{
+            background:#0ea5e9;
+        }
+        #map{
+            height:400px;
+            margin-top:15px;
+            border-radius:12px;
+        }
+        #distance{
+            margin-top:15px;
+            font-size:16px;
+        }
+        .save-btn{
+            background:#22c55e;
+        }
+        .save-btn:hover{
+            background:#16a34a;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>{{ name }}</h1>
+
+<img src="{{ image }}">
+
+<div class="card">
+    <h3>Cost Details</h3>
+    <p>Hotel: ₹{{ hotel }}</p>
+    <p>Food: ₹{{ food }}</p>
+    <p>Sightseeing: ₹{{ sight }}</p>
+</div>
+
+<div class="card">
+
+    <input type="text" id="cityInput"
+           placeholder="Enter your city (e.g., Coimbatore)">
+
+    <button onclick="searchCity()">Search City</button>
+    <button onclick="detectCurrentCity()">Use My Current City</button>
+
+    <div id="map"></div>
+    <div id="distance"></div>
+
+    <button class="save-btn" onclick="saveTrip()">Save Trip</button>
+
+</div>
+
+<br>
+<a href="/budget" style="color:#38bdf8;">← Back to Destinations</a>
+
+</div>
+
+<script>
+
+const destLat = Number("{{ lat }}");
+const destLon = Number("{{ lon }}");
+const destinationName = "{{ name }}";
+
+const map = L.map('map').setView([destLat, destLon], 8);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([destLat, destLon])
+    .addTo(map)
+    .bindPopup(destinationName)
+    .openPopup();
+
+let routeLine;
+let lastDistance = 0;
+
+function getRoute(userLat, userLon){
+
+    fetch(
+        "https://router.project-osrm.org/route/v1/driving/"
+        + userLon + "," + userLat + ";"
+        + destLon + "," + destLat
+        + "?overview=full&geometries=geojson"
+    )
+    .then(res=>res.json())
+    .then(data=>{
+
+        if(!data.routes || data.routes.length===0){
+            alert("Route not available");
+            return;
+        }
+
+        const route = data.routes[0];
+        const distanceKm = (route.distance/1000).toFixed(2);
+        const durationMin = (route.duration/60).toFixed(0);
+
+        lastDistance = distanceKm;
+
+        document.getElementById("distance").innerHTML =
+            "<p><b>Distance:</b> " + distanceKm + " KM</p>" +
+            "<p><b>Estimated Time:</b> " + durationMin + " mins</p>" +
+            "<p><b>Fuel Cost:</b> ₹" +
+            ((distanceKm/15)*100).toFixed(2) + "</p>";
+
+        if(routeLine){
+            map.removeLayer(routeLine);
+        }
+
+        routeLine = L.geoJSON(route.geometry,{
+            style:{color:"#38bdf8",weight:5}
+        }).addTo(map);
+
+        map.fitBounds(routeLine.getBounds(),{padding:[50,50]});
+    });
+}
+
+function searchCity(){
+
+    const city = document.getElementById("cityInput").value;
+
+    if(!city){
+        alert("Enter a city name");
+        return;
+    }
+
+    fetch("https://nominatim.openstreetmap.org/search?format=json&q=" + city)
+    .then(res=>res.json())
+    .then(data=>{
+        if(data.length===0){
+            alert("City not found");
+            return;
+        }
+
+        const userLat = parseFloat(data[0].lat);
+        const userLon = parseFloat(data[0].lon);
+
+        L.marker([userLat,userLon]).addTo(map)
+            .bindPopup("Your Location");
+
+        getRoute(userLat,userLon);
+    });
+}
+
+function detectCurrentCity(){
+
+    fetch("https://ipapi.co/json/")
+    .then(res=>res.json())
+    .then(data=>{
+
+        const userLat = data.latitude;
+        const userLon = data.longitude;
+
+        L.marker([userLat,userLon]).addTo(map)
+            .bindPopup("Detected Location");
+
+        getRoute(userLat,userLon);
+    });
+}
+
+function saveTrip(){
+
+    if(lastDistance == 0){
+        alert("Please calculate route first.");
+        return;
+    }
+
+    fetch("/save-trip", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+            destination: destinationName,
+            days: 1,
+            total: Math.round(lastDistance * 100)
+        })
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        alert(data.message);
+    });
+
+}
+
+</script>
+
+</body>
+</html>

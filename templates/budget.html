@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Choose Destination</title>
+
+    <style>
+        body {
+            background: linear-gradient(135deg,#0f172a,#1e293b);
+            font-family: Arial;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 85%;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: rgba(30,41,59,0.8);
+            padding: 15px;
+            border-radius: 15px;
+            transition: 0.4s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.03);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 12px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card h3 {
+            margin-top: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .category {
+            font-size: 14px;
+            color: #38bdf8;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Select Your Destination</h1>
+
+<div class="grid">
+
+    {% for d in destinations %}
+
+        <div class="card">
+            <a href="/destination/{{ d.id }}">
+
+                <img src="{{ d.image }}" alt="{{ d.name }}">
+
+                <h3>{{ d.name }}</h3>
+
+                <p class="category">{{ d.category }}</p>
+
+            </a>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
+{% endblock %}
