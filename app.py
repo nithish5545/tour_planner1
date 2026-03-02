@@ -8,6 +8,10 @@ import os
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key")
 
+@app.route("/debug")
+def debug():
+    return "NEW VERSION DEPLOYED"
+
 
 # ================= DATABASE ============
 import os
