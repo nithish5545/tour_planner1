@@ -1,5 +1,9 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask
+import os
+
+app = Flask(__name__, static_folder="static", template_folder="templates")
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -303,3 +307,4 @@ def admin_delete(id):
 def logout():
     session.clear()
     return redirect("/login")
+
