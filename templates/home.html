@@ -1,115 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>AI Travel Planner</title>
+{% extends "base.html" %}
 
-<style>
-body{
-font-family:Arial;
-background:linear-gradient(135deg,#0f172a,#1e293b);
-color:white;
-text-align:center;
-}
-
-.hero{
-padding:60px;
-}
-
-input, select{
-padding:8px;
-margin:8px;
-border-radius:6px;
-border:none;
-}
-
-button{
-padding:8px 15px;
-background:#38bdf8;
-border:none;
-border-radius:6px;
-cursor:pointer;
-font-weight:bold;
-}
-
-button:hover{
-background:#0ea5e9;
-}
-
-#aiResult{
-margin-top:20px;
-}
-
-img{
-border-radius:12px;
-margin-top:10px;
-}
-</style>
-</head>
-
-<body>
+{% block content %}
 
 <div class="hero">
-<h1>AI Powered Travel Planner 🤖</h1>
-<p>Plan Smart. Travel Better.</p>
-<a href="/budget"><button>Browse Destinations</button></a>
+
+<h1>🌍 Tamil Nadu Kerala Tour Planner</h1>
+
+<p>Plan your trip easily with budget calculation and car rental.</p>
+
+<a href="/dashboard">
+<button>Start Planning</button>
+</a>
+
 </div>
 
-<hr>
-
-<h2>🤖 AI Trip Suggestion</h2>
-
-Budget: <input type="number" id="aiBudget" placeholder="Enter Budget">
-Days: <input type="number" id="aiDays" placeholder="Enter Days">
-
-<select id="aiCategory">
-<option value="Hill">Hill</option>
-<option value="Beach">Beach</option>
-<option value="Temple">Temple</option>
-<option value="Nature">Nature</option>
-</select>
-
-<br>
-<button onclick="getSuggestion()">Get Suggestion</button>
-
-<div id="aiResult"></div>
-
-<script>
-
-function getSuggestion(){
-
-let budget = document.getElementById("aiBudget").value;
-let days = document.getElementById("aiDays").value;
-let category = document.getElementById("aiCategory").value;
-
-fetch("/ai-suggest",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-budget:budget,
-days:days,
-category:category
-})
-})
-.then(res=>res.json())
-.then(data=>{
-
-if(data.message){
-document.getElementById("aiResult").innerHTML=data.message;
-}else{
-document.getElementById("aiResult").innerHTML=
-`<h3>Suggested: ${data.name}</h3>
-<img src="${data.image}" width="300">
-<p>Estimated Cost: ₹${data.estimated_cost}</p>
-<a href="/destination/${data.id}">
-<button>View Plan</button>
-</a>`;
-}
-
-});
-
-}
-
-</script>
-
-</body>
-</html>
+{% endblock %}
