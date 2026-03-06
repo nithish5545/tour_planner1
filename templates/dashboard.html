@@ -2,51 +2,32 @@
 
 {% block content %}
 
-<h2 style="text-align:center;">Welcome {{ name }}</h2>
-<h2 style="text-align:center;">🌍 Explore Popular Destinations</h2>
-
-<div class="places">
-    {% for d in destinations %}
-    <a href="/destination/{{ d.id }}">
-        <div class="card">
-            <img src="{{ d.image_url }}">
-            <h3>{{ d.name }}</h3>
-        </div>
-    </a>
-    {% endfor %}
+<div class="hero">
+<h1>Welcome {{ name }}</h1>
+<p>Explore Popular Destinations</p>
 </div>
 
-<style>
-.places{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:25px;
-    padding:40px;
-}
+<div class="destinations">
 
-.card{
-    background:#1e293b;
-    width:260px;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 8px 25px rgba(0,0,0,0.5);
-    transition:0.4s;
-}
+{% for d in destinations %}
 
-.card:hover{
-    transform:scale(1.05);
-}
+<div class="card">
 
-.card img{
-    width:100%;
-    height:200px;
-    object-fit:cover;
-}
+<img src="{{ d.image_url }}">
 
-.card h3{
-    padding:15px;
-}
-</style>
+<div class="card-body">
+<h3>{{ d.name }}</h3>
+
+<a href="/destination/{{ d.id }}">
+<button>Explore</button>
+</a>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
 
 {% endblock %}
